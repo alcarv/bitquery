@@ -21,7 +21,7 @@ export class TVChartContainer extends React.PureComponent {
 		clientId: 'tradingview.com',
 		userId: 'public_user_id',
 		fullscreen: false,
-		autosize: true
+		autosize: false
 	};
 
 	tvWidget = null;

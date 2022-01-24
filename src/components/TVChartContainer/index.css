@@ -1,3 +1,10 @@
 .TVChartContainer {
 	height: calc(100vh - 80px);
 }
+
+#tv_chart_container {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+}
