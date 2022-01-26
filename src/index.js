@@ -4,6 +4,6 @@ import App from './App';
 import './index.css';
 
 ReactDOM.render(
-	React.createElement(App),
-	document.getElementById('tv_chart_container')
+	<App/>,
+	document.getElementById('App')
 );
