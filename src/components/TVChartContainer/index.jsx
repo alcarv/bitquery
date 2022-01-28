@@ -2,7 +2,7 @@ import * as React from 'react';
 import './index.css';
 import { widget } from '../../charting_library';
 import Datafeed from './datafeed'; 
-
+import BasicButtons from '../interfaceDesign/buttonReturnChart';
 function getLanguageFromURL() {
 	const regex = new RegExp('[\\?&]lang=([^&#]*)');
 	const results = regex.exec(window.location.search);
@@ -21,7 +21,7 @@ export class TVChartContainer extends React.PureComponent {
 		clientId: 'tradingview.com',
 		userId: 'public_user_id',
 		fullscreen: false,
-		autosize: true
+		autosize: false
 	};
 
 	tvWidget = null;
@@ -78,10 +78,11 @@ export class TVChartContainer extends React.PureComponent {
 
 	render() {
 		return (
-			<div
-				id={ this.props.containerId }
-				className={ 'TVChartContainer' }
-			/>
+			<><div
+				id={this.props.containerId}
+				className={'TVChartContainer'} />
+					<BasicButtons />
+				</>
 		);
 	}
 }
