@@ -5,12 +5,16 @@ import './input.css'
 import api, {query} from '../../services/tokenInfo'
 //import * as Bitquery from '../TVChartContainer/Bitquery'
 import * as Bitquery from "../TVChartContainer/Bitquery";
+import { useNavigate } from "react-router-dom";
 
-export default function BasicTextFields() {
 
-    const [coin, setCoin] = useState();
+  
+const BasicTextFields = () => {
+    const navigate = useNavigate();
+    //const [coin, setCoin] = useState();
     //export const filterResult;
     let teste = []
+    let resultadoFiltro;
     useEffect(() =>  {
         api
         .post(
@@ -44,19 +48,21 @@ export default function BasicTextFields() {
     function onKeyUpValue(event) {
         console.log(event.target.value)
         const symbols = teste;
-        console.log(symbols)
+        //console.log(symbols)
         let resultFilter = symbols.filter(filterSymbol => {
-            return filterSymbol.symbol.toLowerCase().indexOf(event.target.value.toLowerCase()) > -1;
+            //console.log(filterSymbol)
+            return filterSymbol.address.toLowerCase().indexOf(event.target.value.toLowerCase()) > -1;
         });
-        if(resultFilter.length > 1) {
-            return "Nao achou"
-        }
+        console.log(resultFilter)
+        if(resultFilter.length == 1){
         console.log(resultFilter)
         console.log(resultFilter[0].address)
         //resolveSymbol.resolveSymbol(resultFilter.address)
         const filterResult = resultFilter[0].address;
-        Bitquery.filtrotoken(filterResult)
+        //Bitquery.filtrotoken(filterResult)
+        resultadoFiltro = filterResult;
         //console.log(resultFilter)
+        }
     };
 
   return (
@@ -66,10 +72,12 @@ export default function BasicTextFields() {
       sx={{
         '& > :not(style)': { m: 1, width: '25ch' },
       }}
+      onSubmit={() => navigate(`/trading/${resultadoFiltro}`)}
       noValidate
-      autoComplete="off"
+      autoComplete="on"
     >
-      <TextField id="outlined-basic" onKeyUp={onKeyUpValue.bind(this)} label="Token Name / Addres" variant="outlined" />
+      <TextField id="outlined-basic" onKeyUp={onKeyUpValue.bind(this)} label="Token Address" variant="outlined" />
     </Box>
   );
 }
+export default BasicTextFields;

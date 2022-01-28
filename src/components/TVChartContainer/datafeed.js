@@ -10,79 +10,83 @@ import {
     unsubscribeFromStream,
 } from './streaming.js';
 //const lastBarsCache = new Map(); 
+
 const configurationData = {
-    supported_resolutions: ['1', '5', '15', '30', '60', '1D', '1W', '1M'],
-exchanges: [{
-    value: 'Bitfinex',
-    name: 'Bitfinex',
-    desc: 'Bitfinex',
-},
-{
-    // `exchange` argument for the `searchSymbols` method, if a user selects this exchange
-    value: 'Kraken',
-
-    // filter name
-    name: 'Kraken',
-
-    // full exchange name displayed in the filter popup
-    desc: 'Kraken bitcoin exchange',
-},
-],
-symbols_types: [{
-    name: 'crypto',
-
-    // `symbolType` argument for the `searchSymbols` method, if a user selects this symbol type
-    value: 'crypto',
-},
-    // ...
-],
-};
-const lastBarsCache = new Map();
-async function getAllSymbols() {
-    let allSymbols = [];
-    axios.post(
-        "/api", {
-            headers: {
-                "Content-Type": "application/json",
-                "X-API-KEY": "BQY83wwAzmLPC7QOMFQAW95IRaEc9QDX"
-            },
-            query: `{
-                ethereum(network: bsc) {
-                  transfers(options: {desc: "count", limit: 10000}) {
-                    currency {
-                      name
-                      symbol
-                      address
-                    }
-                    count
-                  }
-                }
-              }`,
-            mode: 'cors'
-        }
-    ).then((response) => {
-        //console.log(response)
-        const symbols = response.data.data.ethereum.transfers.map(data => {
-            return {
-                address: data.currency.address,
-                symbol: data.currency.symbol,
-                name: data.currency.name,
-                type: 'crypto',
-                exchange: '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73'
-
-            }
-        })
-        //console.log(result)
-        allSymbols = [...allSymbols, ...symbols];
-        console.log(allSymbols)
-        //console.log(teste)
-        //setCoin(response.data)
-    })
-      .catch((err) => {
-        console.error("ops! ocorreu um erro" + err);
-      });
-      return allSymbols;
-    
+    supported_resolutions: ['1','5','15','30', '60','1D', '1W', '1M']
+}; 
+//const configurationData = {
+//    supported_resolutions: ['1', '5', '15', '30', '60', '1D', '1W', '1M'],
+//exchanges: [{
+//    value: 'Bitfinex',
+//    name: 'Bitfinex',
+//    desc: 'Bitfinex',
+//},
+//{
+//    // `exchange` argument for the `searchSymbols` method, if a user selects this exchange
+//    value: 'Kraken',
+//
+//    // filter name
+//    name: 'Kraken',
+//
+//    // full exchange name displayed in the filter popup
+//    desc: 'Kraken bitcoin exchange',
+//},
+//],
+//symbols_types: [{
+//    name: 'crypto',
+//
+//    // `symbolType` argument for the `searchSymbols` method, if a user selects this symbol type
+//    value: 'crypto',
+//},
+//    // ...
+//],
+//};
+//const lastBarsCache = new Map();
+//async function getAllSymbols() {
+//    let allSymbols = [];
+//    axios.post(
+//        "/api", {
+//            headers: {
+//                "Content-Type": "application/json",
+//                "X-API-KEY": "BQY83wwAzmLPC7QOMFQAW95IRaEc9QDX"
+//            },
+//            query: `{
+//                ethereum(network: bsc) {
+//                  transfers(options: {desc: "count", limit: 10000}) {
+//                    currency {
+//                      name
+//                      symbol
+//                      address
+//                    }
+//                    count
+//                  }
+//                }
+//              }`,
+//            mode: 'cors'
+//        }
+//    ).then((response) => {
+//        //console.log(response)
+//        const symbols = response.data.data.ethereum.transfers.map(data => {
+//            return {
+//                address: data.currency.address,
+//                symbol: data.currency.symbol,
+//                name: data.currency.name,
+//                type: 'crypto',
+//                exchange: '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73'
+//
+//            }
+//        })
+//        //console.log(result)
+//        allSymbols = [...allSymbols, ...symbols];
+//        console.log(allSymbols)
+//        //console.log(teste)
+//        //setCoin(response.data)
+//    })
+//      .catch((err) => {
+//        console.error("ops! ocorreu um erro" + err);
+//      });
+//      return allSymbols;
+//    
 
     //    const pairs = data.Data[exchange.value].pairs;
 //
@@ -100,7 +104,7 @@ async function getAllSymbols() {
     //        allSymbols = [...allSymbols, ...symbols];
     //    }
     //return allSymbols;
-}
+//}
 
 export default {
     // This method is used by the Charting Library to get a configuration of your datafeed 
@@ -109,26 +113,26 @@ export default {
         console.log('[onReady]: Method called!!');
         setTimeout(() => callback(configurationData));
     },
-    searchSymbols: async (
-        userInput,
-        exchange,
-        symbolType,
-        onResultReadyCallback,
-    ) => {
-        console.log('[searchSymbols]: Method call');
-		const symbols = await getAllSymbols();
-        console.log(symbols)
-        console.log(userInput)
-		const newSymbols = symbols.filter(symbol => {
-			const isExchangeValid = exchange === '' || symbol.exchange === exchange;
-			const isFullSymbolContainsInput = symbol.symbol
-				.toLowerCase()
-				.indexOf(userInput.toLowerCase()) !== -1;
-			return isExchangeValid && isFullSymbolContainsInput;
-		});
-        console.log(newSymbols)
-        onResultReadyCallback(newSymbols);
-    },
+    //searchSymbols: async (
+    //    userInput,
+    //    exchange,
+    //    symbolType,
+    //    onResultReadyCallback,
+    //) => {
+    //    console.log('[searchSymbols]: Method call');
+	//	const symbols = await getAllSymbols();
+    //    console.log(symbols)
+    //    console.log(userInput)
+	//	const newSymbols = symbols.filter(symbol => {
+	//		const isExchangeValid = exchange === '' || symbol.exchange === exchange;
+	//		const isFullSymbolContainsInput = symbol.symbol
+	//			.toLowerCase()
+	//			.indexOf(userInput.toLowerCase()) !== -1;
+	//		return isExchangeValid && isFullSymbolContainsInput;
+	//	});
+    //    console.log(newSymbols)
+    //    onResultReadyCallback(newSymbols);
+    //},
 
     // This method is used by the library to retrieve information about a specific symbol 
     // (exchange, price scale, full symbol etc.).
@@ -169,12 +173,6 @@ export default {
                 intraday_multipliers: ['1', '5', '15', '30', '60'],
                 has_empty_bars: true,
                 has_weekly_and_monthly: false,
-                supported_resolutions: configurationData.supported_resolutions, 
-			supported_resolutions: configurationData.supported_resolutions,
-                supported_resolutions: configurationData.supported_resolutions, 
-			supported_resolutions: configurationData.supported_resolutions,
-                supported_resolutions: configurationData.supported_resolutions, 
-			supported_resolutions: configurationData.supported_resolutions,
                 supported_resolutions: configurationData.supported_resolutions, 
                 volume_precision: 1,
                 data_status: 'streaming',
@@ -223,7 +221,7 @@ export default {
         //console.log(resolution)
         try {
             const response2 = await axios.post(Bitquery.endpoint, {
-                query: Bitquery.GET_COIN_BARS,
+                query: Bitquery.filtrotokenBar(),
                 variables: {
                     "from": new Date("2022-01-01T00:23:21.000Z").toISOString(),
                     "to": new Date("2022-02-23T15:23:21.000Z").toISOString(),
@@ -265,11 +263,11 @@ export default {
             })
             //console.log(bars)
             //console.log(response2.data.data.ethereum.dexTrades[0].high);
-            if (firstDataRequest) {
-                lastBarsCache.set(symbolInfo.full_name, {
-                    ...bars[bars.length - 1],
-                });
-            }
+            //if (firstDataRequest) {
+            //    lastBarsCache.set(symbolInfo.full_name, {
+            //        ...bars[bars.length - 1],
+            //    });
+            //}
             console.log(`[getBars]: returned ${bars.length} bar(s)`);
             onHistoryCallback(bars, {
                 noData: false,

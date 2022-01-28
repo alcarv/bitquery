@@ -11,7 +11,6 @@ class App extends React.Component {
 						TradingView Charting Library and Bitquery API Integration
 					</h1>
 				</header>
-				<TVChartContainer />
 				<BasicTextFields />
 			</div>
 		);
