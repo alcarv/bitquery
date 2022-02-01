@@ -27,11 +27,11 @@ const BasicTextFields = () => {
                 mode: 'cors'
             }
         ).then((response) => {
-            const result = response.data.data.ethereum.transfers.map(data => {
+            const result = response.data.data.ethereum.dexTrades.map(data => {
                 return {
-                    address: data.currency.address,
-                    symbol: data.currency.symbol,
-                    name: data.currency.name
+                    address: data.baseCurrency.address,
+                    symbol: data.baseCurrency.symbol,
+                    name: data.baseCurrency.name
 
                 }
             })
